@@ -1,5 +1,5 @@
 package com.api.orchestrator.finance;
 
-public class FinanceController {
+public class ExpenseController {
 
 }

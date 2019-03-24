@@ -1,0 +1,314 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Finance Orquestrator
+  description: 'Service exemplo.'
+  contact:
+    name: Alisson da Cruz Souza - Java Developer
+    email: alissoncruz.si@gmail.com.com
+host: sandbox-api.test.com.br
+basePath: /exemplo/finance/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /expense:
+    post:
+      tags:
+        - Expense
+      summary: Create new expense 
+      description: 'Create new Expense.'
+      operationId: createExpense
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: newExpense
+          description: data of the new expense
+          required: true
+          schema:
+            $ref: '#/definitions/Expense'
+      responses:
+
+        '201':
+          description: Create new resource
+          schema:
+            $ref: '#/definitions/ExpenseCode'
+        '401':
+          description: Authorization Failed
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Document not found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+      security:
+        - OauthSecurity:
+            - "bearer"
+  /expense/{code}:
+    get:
+      tags:
+        - Expense
+      summary: Gets a expense
+      description: 'get a expnse'
+      operationId: getExpense
+      produces:
+        - application/json
+      security:
+        - OauthSecurity:
+            - bearer
+      parameters:
+        - name: code
+          in: path
+          description: Code of the expense
+          required: true
+          type: string
+          x-example: 'CA-MPME-VOUCHER-000001'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/ExpenseResponse'
+        '401':
+          description: Authorization Failed
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Document not found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    put:
+      tags:
+        - Expense
+      summary: Update a expense
+      description: 'get a expense'
+      operationId: updateExpense
+      produces:
+        - application/json
+      security:
+        - OauthSecurity:
+            - bearer
+      parameters:
+        - name: code
+          in: path
+          description: Code of the expense
+          required: true
+          type: string
+          x-example: 'CA-MPME-VOUCHER-000001'
+        - name: Expense
+          in: body
+          description: data of the Expense
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateExpense'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  
+securityDefinitions:
+  OauthSecurity:
+    type: oauth2
+    flow: accessCode
+    authorizationUrl: 'https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login'
+    tokenUrl: 'https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login'
+    scopes:
+      bearer: Client authorization token - Bearer JWT
+security:
+  - OauthSecurity:
+      - bearer
+
+definitions:
+
+  Expense:
+    description: Expense data
+    type: object
+    required:
+      - description
+      - totalValue
+      - date
+      - user
+    properties:
+      description:
+        type: string
+        example: string
+        description: Name of the expense
+      totalValue:
+        type: number
+        example: 59.90
+        minimum: 0
+        exclusiveMinimum: true
+        description: Total value available for the expense.
+      date:
+        type: string
+        format: date
+        example: yyyy-mm-dd
+        description: Start Date of the validity of the expense.
+      user:
+        type: string
+        example: 000001
+        description: Unique identifier of the User
+      category:
+        type: string
+        example: Category
+        description: Unique identifier of the Category    
+      paymentMethods:
+        type: array
+        items:
+          $ref: '#/definitions/PaymentMethod'
+          
+  ExpenseResponse:
+    description: Expense data
+    type: object
+    required:
+      - code
+      - totalValue
+      - currentValue
+    properties:
+      description:
+        type: string
+        example: string
+        description: Name of the expense
+      totalValue:
+        type: number
+        example: 59.90
+        minimum: 0
+        exclusiveMinimum: true
+        description: Total value available for the expense.
+      date:
+        type: string
+        format: date
+        example: yyyy-mm-dd
+        description: Start Date of the validity of the expense.
+      user:
+        type: string
+        example: 000001
+        description: Unique identifier of the User
+      category:
+        type: string
+        example: Category
+        description: Unique identifier of the Category  
+      paymentMethods:
+        type: array
+        items:
+          $ref: '#/definitions/PaymentMethod'
+        
+  UpdateExpense:
+    description: Expense data
+    type: object
+    required:
+      - name
+      - totalValue
+      - startDate
+      - endDate
+      - status
+      - masterExpenseCode
+    properties:
+      description:
+        type: string
+        example: string
+        description: Name of the expense
+      totalValue:
+        type: number
+        example: 59.90
+        minimum: 0
+        exclusiveMinimum: true
+        description: Total value available for the expense.
+      date:
+        type: string
+        format: date
+        example: yyyy-mm-dd
+        description: Start Date of the validity of the expense.
+      user:
+        type: string
+        example: 000001
+        description: Unique identifier of the User
+      category:
+        type: string
+        example: Category
+        description: Unique identifier of the Category
+      paymentMethods:
+        type: array
+        items:
+          $ref: '#/definitions/PaymentMethod'  
+  
+
+  ErrorModel:
+    type: object
+    required:
+      - codeBuilderComplete
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+
+  ExpenseCode:
+    description: Expense data
+    type: object
+    required:
+      - code
+    properties:
+      code:
+        type: string
+        example: EX-000001
+        description: Unique identifier of the Expense
+
+  PaymentMethod:
+    type: object
+    required:
+      - paymentMethod
+      - paymentAmount
+    properties:
+      paymentMethod:
+        type: string
+      paymentAmount:
+        type: number
+        example: 59.90
+        minimum: 0
+        exclusiveMinimum: true
+        description: used value 
