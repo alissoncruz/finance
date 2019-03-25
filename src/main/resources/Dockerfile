@@ -1,6 +1,6 @@
-FROM docker-registry-default.apps.appcanvas.net/dev-secops-br-staging/experian-centos7-java11:latest
+FROM docker-registry-default.apps.appcanvas.net/test/test-java11:latest
 
-LABEL MANTAINER="Serasa Experian IT Team"
+LABEL MANTAINER="Exemple"
 
 # Environment variable 
 ENV SPRING_LOGGING_LEVEL INFO
