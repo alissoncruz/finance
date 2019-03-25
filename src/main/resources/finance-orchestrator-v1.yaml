@@ -154,8 +154,8 @@ securityDefinitions:
   OauthSecurity:
     type: oauth2
     flow: accessCode
-    authorizationUrl: 'https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login'
-    tokenUrl: 'https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login'
+    authorizationUrl: 'https://sandbox-api.exemple.com.br/security/iam/v1/user-identities/login'
+    tokenUrl: 'https://sandbox-api.exemple.com.br/security/iam/v1/user-identities/login'
     scopes:
       bearer: Client authorization token - Bearer JWT
 security:
