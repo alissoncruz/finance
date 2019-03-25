@@ -19,7 +19,7 @@ paths:
     post:
       tags:
         - Expense
-      summary: Create new expense 
+      summary: Create new expense
       description: 'Create new Expense.'
       operationId: createExpense
       produces:
@@ -79,7 +79,7 @@ paths:
         '200':
           description: Ok
           schema:
-            $ref: '#/definitions/ExpenseResponse'
+            $ref: '#/definitions/ResponseExpenses'
         '401':
           description: Authorization Failed
           schema:
@@ -148,13 +148,13 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  
+
 securityDefinitions:
   OauthSecurity:
     type: oauth2
     flow: accessCode
-    authorizationUrl: 'https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login'
-    tokenUrl: 'https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login'
+    authorizationUrl: 'https://sandbox-api.exemple.com.br/security/iam/v1/user-identities/login'
+    tokenUrl: 'https://sandbox-api.exemple.com.br/security/iam/v1/user-identities/login'
     scopes:
       bearer: Client authorization token - Bearer JWT
 security:
@@ -194,12 +194,25 @@ definitions:
       category:
         type: string
         example: Category
-        description: Unique identifier of the Category    
+        description: Unique identifier of the Category
       paymentMethods:
         type: array
         items:
           $ref: '#/definitions/PaymentMethod'
-          
+
+  ResponseExpenses:
+    type: object
+    required:
+      - purchases
+      - pagination
+    properties:
+      expenses:
+        type: array
+        items:
+          $ref: '#/definitions/ExpenseResponse'
+      pagination:
+        $ref: '#/definitions/Pagination'
+
   ExpenseResponse:
     description: Expense data
     type: object
@@ -230,12 +243,35 @@ definitions:
       category:
         type: string
         example: Category
-        description: Unique identifier of the Category  
+        description: Unique identifier of the Category
       paymentMethods:
         type: array
         items:
           $ref: '#/definitions/PaymentMethod'
-        
+  Pagination:
+    type: object
+    properties:
+      offset:
+        type: number
+      limit:
+        type: number
+      totalCount:
+        type: number
+      totalPages:
+        type: number
+      links:
+        description: links for next page, previous page, first page and last page
+        type: array
+        items:
+          required:
+            - href
+            - rel
+          properties:
+            href:
+              type: string
+            rel:
+              type: string
+              description: Expected values are 'Last', 'Previous', 'Next' or 'First'
   UpdateExpense:
     description: Expense data
     type: object
@@ -273,8 +309,8 @@ definitions:
       paymentMethods:
         type: array
         items:
-          $ref: '#/definitions/PaymentMethod'  
-  
+          $ref: '#/definitions/PaymentMethod'
+
 
   ErrorModel:
     type: object
