@@ -19,13 +19,13 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 public class ExpenseController extends BaseRestController implements ExpenseApi {
 
-//    private final Logger log = ESAPI.getLogger(getClass());
+    private final Logger log = ESAPI.getLogger(getClass());
 
     @Override
     public ResponseEntity<ExpenseExpenseCodeTO> createExpense(@Valid @RequestBody ExpenseExpenseTO newExpense) {
-//        log.info(EVENT_UNSPECIFIED, "Start method createExpense");
-//
-//        log.info(EVENT_UNSPECIFIED, "Finish method createExpense");
+        log.info(EVENT_UNSPECIFIED, "Start method createExpense");
+
+        log.info(EVENT_UNSPECIFIED, "Finish method createExpense");
         ExpenseExpenseCodeTO response = new ExpenseExpenseCodeTO();
 
         response.setCode("0001");
@@ -35,9 +35,9 @@ public class ExpenseController extends BaseRestController implements ExpenseApi 
     @Override
     public ResponseEntity<ExpenseResponseExpensesTO> getExpense(@PathVariable("code") String code) {
 
-//        log.info(EVENT_UNSPECIFIED, "Start method getExpense");
-//
-//        log.info(EVENT_UNSPECIFIED, "Finish method getExpense");
+        log.info(EVENT_UNSPECIFIED, "Start method getExpense");
+
+        log.info(EVENT_UNSPECIFIED, "Finish method getExpense");
         ExpenseResponseExpensesTO response = new ExpenseResponseExpensesTO();
 
         return new ResponseEntity<>(response, OK);
@@ -47,9 +47,9 @@ public class ExpenseController extends BaseRestController implements ExpenseApi 
     @Override
     public ResponseEntity<Void> updateExpense(@PathVariable("code") String code,
                                               @Valid @RequestBody ExpenseUpdateExpenseTO expense) {
-//        log.info(EVENT_UNSPECIFIED, "Start method updateExpense");
-//
-//        log.info(EVENT_UNSPECIFIED, "Finish method updateExpense");
+        log.info(EVENT_UNSPECIFIED, "Start method updateExpense");
+
+        log.info(EVENT_UNSPECIFIED, "Finish method updateExpense");
         return new ResponseEntity<>(OK);
     }
 }
