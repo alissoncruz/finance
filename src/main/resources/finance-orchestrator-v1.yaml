@@ -56,7 +56,8 @@ paths:
       security:
         - OauthSecurity:
             - "bearer"
-  /expense/{code}:
+
+  /expense/{user}:
     get:
       tags:
         - Expense
@@ -69,12 +70,12 @@ paths:
         - OauthSecurity:
             - bearer
       parameters:
-        - name: code
+        - name: user
           in: path
           description: Code of the expense
           required: true
           type: string
-          x-example: 'CA-MPME-VOUCHER-000001'
+          x-example: '000001'
       responses:
         '200':
           description: Ok
@@ -108,7 +109,7 @@ paths:
         - OauthSecurity:
             - bearer
       parameters:
-        - name: code
+        - name: user
           in: path
           description: Code of the expense
           required: true
@@ -153,8 +154,8 @@ securityDefinitions:
   OauthSecurity:
     type: oauth2
     flow: accessCode
-    authorizationUrl: 'https://sandbox-api.exemple.com.br/security/iam/v1/user-identities/login'
-    tokenUrl: 'https://sandbox-api.exemple.com.br/security/iam/v1/user-identities/login'
+    authorizationUrl: 'https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login'
+    tokenUrl: 'https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login'
     scopes:
       bearer: Client authorization token - Bearer JWT
 security:
