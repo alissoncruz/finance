@@ -1,6 +1,5 @@
 package com.api.orchestrator.finance.service;
 
-import com.api.orchestrator.finance.document.Payment;
 import com.api.orchestrator.finance.model.Expense;
 
 import java.util.List;
