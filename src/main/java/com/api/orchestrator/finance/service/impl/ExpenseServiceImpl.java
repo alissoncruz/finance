@@ -6,7 +6,6 @@ import com.api.orchestrator.finance.service.ExpenseService;
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
 
 import static com.api.orchestrator.finance.utils.ErrorMessages.singleError;
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 import static org.owasp.esapi.Logger.EVENT_UNSPECIFIED;
 
 public class ExpenseServiceImpl implements ExpenseService {
@@ -58,18 +56,19 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public void updateExpense(final String user, final Expense expense) {
         Optional<Expense> expenseUpdate = expenseRepository.findByUser(user);
-        if(expenseUpdate.isPresent())
-            expenseUpdate.get().setCategory(expense.getCategory()) ;
-        else
-        throw new RuntimeException("Not Found");
+       // if(expenseUpdate.isPresent())
+            //expenseUpdate.get().setCategory(expense.getCategory()) ;
+       //else
+        //throw new RuntimeException("Not Found");
+        //expenseRepository.save(expenseUpdate.stream().filter(e -> e.getDate().equals(expense.getDate())).findFirst().get());
     }
 
     private void validateExpense(Expense expense) {
-        if(isNull(expense.getDescription()))
+       /* if(isNull(expense.getDescription()))
             throw new InvalidParameterException(singleError("1"));
         if(isNull(expense.getValue()))
             throw new InvalidParameterException(singleError("2"));
         if(isNull(expense.getUser()))
-            throw new InvalidParameterException(singleError("3"));
+            throw new InvalidParameterException(singleError("3"));*/
     }
 }
